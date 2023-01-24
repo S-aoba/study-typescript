@@ -1,43 +1,20 @@
 import { NextPage } from 'next';
 
-// Intersection Types
+// Type alias
+
+type Animals = 'dog' | 'cat' | "rabbit";
 type Foo = {
+  [key in Animals]: number; //Mapped Types
+};
+
+type foo = Foo & {
+  dog: 1;
+  cat: 1;
+};
+
+// interface
+interface Foo1 {
   a: number;
-  b: string;
-};
-
-type Bar = {
-  c: boolean;
-};
-
-type FooBar = Foo & Bar;
-
-const Test: FooBar = {
-  a: 1,
-  b: '',
-  c: true,
-};
-
-// Union Types
-type Foo1 = {
-  a: number;
-  b: string;
-};
-
-type Bar1 = {
-  a: string;
-  c: boolean;
-};
-
-type FooBar1 = Foo1 | Bar1;
-
-const test1: FooBar1 = {
-  a: 1,
-  b: '',
-  c: true,
-};
-if ('b' in test1) {
-  test1.a.toFixed();
 }
 
 export const Home: NextPage = () => {

@@ -1,23 +1,45 @@
 import { NextPage } from 'next';
 
-//オブジェクトの型定義方法
-let obj1: {} = {}; //非推奨
+// Intersection Types
+type Foo = {
+  a: number;
+  b: string;
+};
 
-let obj2: object = {}; //非推奨
+type Bar = {
+  c: boolean;
+};
 
-let obj3: Record<string, Record<'foo', unknown>> = {
-  a: { foo: 1 },
-}; //非推奨 ネストされた状態だと可読性が低くなる
+type FooBar = Foo & Bar;
 
-let obj4: { [key: string]: { foo: unknown } } = {
-  a: { foo: 1 },
-}; //推奨
-
-let obj5: { a: number; b: string; foo?: string } = {
+const Test: FooBar = {
   a: 1,
-  b: 'foo',
-  // foo: 'foo',
-}; //推奨
+  b: '',
+  c: true,
+};
+
+// Union Types
+type Foo1 = {
+  a: number;
+  b: string;
+};
+
+type Bar1 = {
+  a: string;
+  c: boolean;
+};
+
+type FooBar1 = Foo1 | Bar1;
+
+const test1: FooBar1 = {
+  a: 1,
+  b: '',
+  c: true,
+};
+if ('b' in test1) {
+  test1.a.toFixed();
+}
+
 export const Home: NextPage = () => {
   return <h1>Hello</h1>;
 };

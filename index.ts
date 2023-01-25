@@ -1,42 +1,32 @@
-// ユーザー定義Typeガード
-type UserA = { name: string; lang: 'ja' };
-type UserB = { name: string; lang: 'en' };
+// Generics
 
-const isUserA = (user: UserA | UserB): user is UserA => {
-  return user.lang === 'ja'; //true or false
+export type Foo<T extends string | number = string> = {
+  value: T;
 };
 
-const isUserB = (user: UserA | UserB): user is UserB => {
-  return user.lang === 'en'; //true or false
+const foo1: Foo<string> = {
+  value: '',
 };
-
-export const foo = (value: any) => {
-  try {
-    if (isUserA(value)) {
-      return value;
-    }
-    if (isUserB(value)) {
-      return value;
-    }
-  } catch (error) {
-    throw new Error('値が正しくありません');
-  }
+const foo2: Foo<number> = {
+  value: 111,
 };
+// type Japanese = User<'東京都' | '大阪府'>;
+// type American = User<'CA' | 'NY'>;
 
-export const bar = async () => {
-  const res = await fetch('');
-  const json = await res.json();
-  if (isUserA(json)) {
-    return json.lang;
-  }
-};
-
-const users: (UserA | UserB)[] = [
-  { name: '田中', lang: 'ja' },
-  { name: '佐藤', lang: 'ja' },
-  { name: 'alex', lang: 'en' },
-];
-
-// const japanese = users.filter((user) => user.lang === 'ja');
-const japanese = users.filter(isUserA);
-const notJapanese = users.filter(isUserB);
+// const user1: Japanese = {
+//   name: '田中',
+//   state: '東京都',
+// };
+// const user2: American = {
+//   name: 'Johnny',
+//   state: 'CA',
+// };
+// const foo: Foo<string> = {
+//   value: '',
+// };
+// const foo1: Foo<number> = {
+//   value: 0,
+// };
+// const foo2: Foo<boolean> = {
+//   value: true,
+// };

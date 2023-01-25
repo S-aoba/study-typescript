@@ -1,35 +1,42 @@
-// Index Signature 多用はしない方がいい
-export type User = {
-  name: string;
-  age: number;
-  [key: string]: string | number | undefined;
+// ユーザー定義Typeガード
+type UserA = { name: string; lang: 'ja' };
+type UserB = { name: string; lang: 'en' };
+
+const isUserA = (user: UserA | UserB): user is UserA => {
+  return user.lang === 'ja'; //true or false
 };
 
-const user: User = {
-  name: 'aoba',
-  age: 10,
-  account: 'aoba__S',
-};
-user.account;
-
-// Mapped Types
-export type User1 = {
-  name: string;
-} & OptionalPersonalData;
-
-type PersonalData = {
-  height: number;
-  weight: number;
-  a: string;
+const isUserB = (user: UserA | UserB): user is UserB => {
+  return user.lang === 'en'; //true or false
 };
 
-type OptionalPersonalData = {
-  [K in keyof PersonalData]-?: PersonalData[K];
+export const foo = (value: any) => {
+  try {
+    if (isUserA(value)) {
+      return value;
+    }
+    if (isUserB(value)) {
+      return value;
+    }
+  } catch (error) {
+    throw new Error('値が正しくありません');
+  }
 };
 
-const user1: User1 = {
-  name: 'aoba',
-  height: 10,
-  weight: 10,
-  a: '',
+export const bar = async () => {
+  const res = await fetch('');
+  const json = await res.json();
+  if (isUserA(json)) {
+    return json.lang;
+  }
 };
+
+const users: (UserA | UserB)[] = [
+  { name: '田中', lang: 'ja' },
+  { name: '佐藤', lang: 'ja' },
+  { name: 'alex', lang: 'en' },
+];
+
+// const japanese = users.filter((user) => user.lang === 'ja');
+const japanese = users.filter(isUserA);
+const notJapanese = users.filter(isUserB);

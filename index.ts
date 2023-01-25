@@ -1,7 +1,19 @@
 // 関数のGenerics
-const foo = <T extends string>(arg: T) => {
-  return { val: arg };
+const getProperty = <T, K extends keyof T>(obj: T, key: K) => {
+  return obj[key];
 };
 
-const foo1 = foo<string>('');
-const foo2 = foo(''); //型推論
+const obj = {
+  getProperty: 1,
+  bar: 2,
+  baz: 3,
+};
+
+const hoge = getProperty(obj, 'baz');
+
+// LookUp Types
+// type Obj = {
+//   a: string;
+// };
+
+// type Foo = Obj['a'];

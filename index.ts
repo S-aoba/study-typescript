@@ -1,31 +1,29 @@
 // Utility Types
 
-// ReturnType
-const foo = (id: string, age: number) => {
-  return 0;
+// Extract
+type Foo = Extract<string | number, string>;
+// Exclude
+type Foo1 = Exclude<string | number, string>;
+// NonNullable
+type Foo2 = NonNullable<string | null | undefined>;
+// Record
+type Foo3 = Record<string, number>;
+const obj: Foo3 = {
+  a: 0,
 };
-
-type Foo = ReturnType<typeof foo>;
-
-type User = {
-  name: string;
-  age: number | null;
-  country?: 'US' | 'UK' | 'JP';
+// Parameters
+const bar = (a: string) => {
+  return;
 };
+type Bar = Parameters<typeof bar>;
+// Uppercase
+type test = Uppercase<'hello'>;
+// Lowercase
+type test1 = Lowercase<'hello'>;
+// Capitalize
+type test2 = Capitalize<'hello'>;
+// Uncapitalize
+type test3 = Uncapitalize<'Hello'>;
 
-// Readonly
-type ReadonlyUser = Readonly<User>;
-// Partial
-type PartialUser = Partial<User>;
-// Required
-type RequiredUser = Required<User>;
-// Pick
-type PickUser = Pick<User, 'name' | 'country'>;
-// Omit
-type OmitUser = Omit<User, 'age'>;
 
-const user: OmitUser = {
-  name: 'aoba',
-  // age: 30,
-  country: 'UK',
-};
+

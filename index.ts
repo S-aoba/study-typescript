@@ -1,19 +1,11 @@
-// 関数のGenerics
-const getProperty = <T, K extends keyof T>(obj: T, key: K) => {
-  return obj[key];
+type Props = {
+  id: string;
+  name: string;
+  age: number;
 };
 
-const obj = {
-  getProperty: 1,
-  bar: 2,
-  baz: 3,
-};
+type filteredString<T> = {
+  [K in keyof T]: T[K] extends string ? K : never;
+}[keyof T];
 
-const hoge = getProperty(obj, 'baz');
-
-// LookUp Types
-// type Obj = {
-//   a: string;
-// };
-
-// type Foo = Obj['a'];
+type StringKeys = filteredString<Props>;
